@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!-- 
+  This Projects teaches:
+1) Bootstrap 4 cdn
+2) event listener - 'input'
+3) e.target.value - used to get input value
+4) anime.js with delay function 
+-->
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <style>
+    body{
+      margin-top: 70px;
+      background: #333;
+      color: white;;
+    }
+
+    .card{
+      position: relative;
+      left: -1500px
+    }
+  </style>
+  <title>Weight Converter App</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="display-4 text-center mb-4" >Weight Converter</h1>
+        <form>
+          <div class="form-group">
+            <input 
+            id="lbsInput"
+            type="number" 
+            class="form-control form-control-lg" 
+            placeholder="Enter Pounds">
+          </div>
+        </form>
+        <div id="output">
+          <div class="card card-primary mb-2">
+            <div class="card-block">
+              <h4>Grams:</h4>
+              <div id="gramsOutput"></div>
+            </div>
+          </div>
+          <div class="card card-success mb-2">
+            <div class="card-block">
+              <h4>Kilograms:</h4>
+              <div id="kgOutput"></div>
+            </div>
+          </div>
+          <div class="card card-danger mb-2">
+            <div class="card-block">
+              <h4>Ounces:</h4>
+              <div id="ozOutput"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
+  <script>
+    document.getElementById('lbsInput').addEventListener('input', function(e){
+      let lbs = e.target.value;
+      let grams = lbs/0.0022046
+      let kg = lbs/2.2046
+      let oz = lbs*16
+      document.getElementById('gramsOutput').innerHTML = grams.toFixed(2) + " grams";
+      document.getElementById('kgOutput').innerHTML = kg.toFixed(2) + " kilograms";
+      document.getElementById('ozOutput').innerHTML = oz.toFixed(2) + " ounces";
+
+      anime({
+      targets:'div.card',
+      translateX:[
+        {value: 1500, duration: 1000}
+      ],
+      delay: function(el, i, l){ return i * 100}
+      })
+    })
+    document.getElementById('lbsInput').addEventListener('input', function(e){
+      if (e.target.value == ''){
+        anime({
+        targets:'div.card',
+        translateX:[
+          {value: 0, duration: 1000}
+        ],
+        delay: function(el, i, l){ return i * 100}
+        })
+      }
+    })
+
+    
+  </script>
+</body>
+</html>

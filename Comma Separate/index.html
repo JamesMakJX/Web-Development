@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Unsaved Contact Messenger</title>
+  <style>
+    body, html{
+      height: 100%;
+      margin: 0px;
+      padding: 0;
+    }
+    
+    #bg{
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      background-image: url('bg.jpg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      position: absolute;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    #output, #output2{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1em;
+      padding: 5px;
+      margin-left: 20px;
+    }
+
+    #getContacts, #encode, #next{
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+      border-radius: 5px;
+      padding: 4px;
+      margin-left: 1em;
+      background: rgb(191, 255, 209)
+    }
+
+    #getContacts:hover, #encode:hover, #next:hover{
+      background: rgb(161, 248, 187);
+      border-width: 1.5px;
+      padding: 3.5px;
+    }
+
+    .left{
+      margin-left: 20px;
+    }
+
+    #output2{
+      font-size: 1.5em;
+      display: none;
+    }
+
+    #input, #input2{
+      border: 2px solid black;
+      border-radius: 5px;
+    }
+
+    #intro{
+      margin: 10px 15%;
+      border: black solid 2px;
+      background-color: rgb(78, 253, 154);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #currNo{
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.2em;
+    }
+
+    textarea{
+      padding: 10px;
+      background: rgb(220, 248, 228)
+    }
+
+    #con{
+      background: rgb(224, 255, 232)
+    }
+
+  </style>
+</head>
+<!-- <img src="bg.jpg" alt="" id="bg"> -->
+
+<body>
+  <div  id="bg"></div>
+  <h1 align='center' style="font-family: arial; padding: 10px; margin: 0;">WhatsApp Unsaved Contacts Messenging App</h1>
+  <p class="left" style="font-family: arial; text-align:left; font-size: 1.5em" id="intro">Paste list of unsaved contact numbers (make sure there is a blank line for the first line, and no newline in the last line), then click  CONVERT TO COMMA SEPARATED, then SEND. 10 new tabs will open and click send in each of the tab to be directed to WhatsAppWeb to send the text to the contact number.</p>
+  <textarea class="left" name="input" id="input" cols="15" rows="5" placeholder="Paste Contact List Here!"></textarea>
+  <button style="display:inline;" id="getContacts">Convert to comma separated</button>
+  <br>
+  <div id="output"></div>
+  <hr><br>
+  <p class="left" id="currNo" style="display:inline;">Current Number: </p>
+  <input type="text" id="con" placeholder=" Current Number">
+  <br>
+  <br>
+  <textarea class="left" name="input2" id="input2" cols="70" rows="11" placeholder="Paste Text to Send to Contacts!"></textarea>
+  <button id="encode">Send</button>
+  <br>
+  <br>
+  <div id="output2"></div>
+  <script>
+    document.getElementById('getContacts').addEventListener('click', convertContacts);
+
+    function convertContacts(){
+      var contacts = document.getElementById('input').value;
+      var converted = contacts.toString().replace(/\n/g, ', 65')
+      var con2 = converted.replace(converted[0], '');
+      document.getElementById('output').innerHTML = con2
+    }
+
+    function next(){
+      var converted = document.getElementById('output').innerHTML;
+      var currentContact = ''
+      for (let i = 0; i < 12; i++ ){
+        currentContact = currentContact.concat(converted[0]);
+        var converted = converted.replace(converted[0], '');
+      }
+      document.getElementById('con').value = currentContact.substring(1,11);
+      document.getElementById('output').innerHTML = converted;
+    }
+
+    document.getElementById('encode').addEventListener('click', encode);
+
+    function encode(){
+      for (let i = 0; i < 10; i++){
+        next();
+        var number = document.getElementById('con').value;
+        var prefix = 'https://api.whatsapp.com/send?phone='+number+'&text='
+        var contacts = document.getElementById('input2').value;
+        var converted = contacts.toString().replace(/ /g, '%20')
+        document.getElementById('output2').innerHTML = prefix+converted
+        var link = document.getElementById('output2').innerHTML;
+        var windowObjectReference;
+        var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+
+        console.log(link)
+        windowObjectReference = window.open(link.replace('amp;', '') , "_blank", strWindowFeatures);
+      }
+    }
+  </script>
+</body>
+</html>

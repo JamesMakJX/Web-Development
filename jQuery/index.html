@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery Crash Course | Selectors</title>
+	<script src=" https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<style type="text/css">
+		body{
+			font-size: 17px;
+			font-family: arial;
+			background:#f4f4f4;
+			line-height: 1.5em;
+		}
+		header{
+			background:#333;
+			color: #fff;
+			padding: 20px;
+			text-align:center;
+			border-bottom: 4px black solid;
+			margin-bottom: 10px;
+		}
+		#container{
+			width: 90%;
+			margin: auto;
+			padding: 10px;
+		}
+
+		.myClass{
+			color: blue;
+			background: grey;
+		}
+
+		#box{
+			background: #333;
+			color: #fff;
+			width: 500px;
+			height: 90px;
+			padding: 40px;
+			text-align: center;
+		}
+
+		#box2{
+			background: red;
+			width: 100px;
+			height: 100px;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>jQuery Crash Course</h1>
+	</header>
+	<div id="container">
+		<button id="btn1">Button 1</button>
+		<button id="btn2">Button 2</button>
+
+		<h1 id="heading1">Heading 1</h1>
+		<p class="para1">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. <span>Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span>
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</p>
+
+		<h1 class="heading2">Heading 1</h1>
+		<p class="para2">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+		tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+		quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+		consequat. <span>Duis aute irure dolor in reprehenderit in voluptate velit esse
+		cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non</span>
+		proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		</p>
+
+		<ul id="list">
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+			<li>List Item</li>
+		</ul>
+<!--
+		<input type="button" value="Button 1">
+		<input type="submit" value="Button 1">
+		<input type="text">-->
+
+		<a href="http://google.com">Google</a>
+		<a href="http://yahoo.com">Yahoo</a>
+
+		<hr>
+
+		<input type="text" id="newItem">
+		<form>
+			<label>Name</label>
+			<br>
+			<input type="text" name="name" id="name">
+			<br>
+			<label>Email</label>
+			<br>
+			<input type="email" name="email" id="email">
+			<br>
+			<label>Gender</label>
+			<br>
+			<select id="gender" name="gender">
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+			</select>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+		<div>
+			<button id="btnFadeOut">Fade Out</button>
+			<button id="btnFadeIn">Fade In</button>
+			<button id="btnFadeTog">Fade Toggle</button>
+
+			<hr>
+
+			<button id="btnSlideUp">Slide Up</button>
+			<button id="btnSlideDown">Slide Down</button>
+			<button id="btnSlideTog">Slide Toggle</button>
+			<button id="btnStop">Stop</button>
+			
+			<hr>
+
+			<div id="box"><h1>Hello World</h1></div>
+
+			<hr>
+
+			<button id="moveLeft">Move Left</button>
+			<button id="moveRight">Move Right</button>
+			<button id="moveAround">Move Around</button>
+
+			<hr>
+
+			<div id="box2"></div>
+			
+		</div>
+		<div style="margin-top: 500px"></div>
+	</div>
+
+	<script>
+		$(document).ready(function(){
+		/*SELECTORS AND CSS*/
+
+			/*$('h1#heading1').hide();
+			$('h1.heading2').hide();
+
+			$('p span').css('color', 'red');
+
+			$('ul#list li:first').css('color', 'red');
+			$('ul#list li:nth(5)').css('background-color', 'blue');
+			$('ul#list li:nth-child(3)').css('list-style', 'none');
+
+			$(':button').hide();
+
+			$('[href]').css('color', 'red');
+			$('[href="http://yahoo.com"]').css('color', 'green');
+
+			$('*').hide();*/
+			
+
+		/*EVENT HANDLING*/
+		
+			/*$('#btn1').click(function(){
+				alert('Button Clicked!');
+			});
+
+			$('#btn1').on('click', function(){
+				alert("Button Clicked!")
+			});
+
+			$('#btn1').click(function(){
+				$('p').hide()/toggle();
+			});
+
+			$('#btn2').click(function(){
+				$('p').show();
+			});
+
+			$('#btn1').dblclick(function(){
+				$('p').toggle();
+			});
+
+			$('#btn1').hover(function(){
+				$('p').toggle();
+			});
+
+			$('#btn1').on('mouseentre/leave', (function(){
+				$('p').toggle();
+			});
+
+			$('#btn1').mousedown(function(){
+				$("p").toggle();
+			});
+
+			$('#btn1').mouseup(function(){
+				$("p").toggle();
+			});
+
+			$(document).mousemove(function(e){
+				$('h1').html("Y: "+e.clientY+"  X: "+e.clientX);
+			})
+
+			$('input').focus(function(){
+				$(this).css('background', 'pink')
+			})
+
+			$('input').blur(function(){
+				$(this).css('background', 'white')
+			})
+
+			$('input').keyup(function(e){
+				console.log(e.target.value)
+			})
+
+			$('select#gender').change(function(e){
+				alert(e.target.value)
+			})
+
+			$('form').submit(function(e){
+				e.preventDefault();
+				var name = $('input#name').val();
+				console.log(name);
+			})
+
+			$('p.para1').css({color: 'red', background: 'yellow'});
+
+			$('p.para2').addClass('myClass');
+
+			$('p.para2').removeClass('myClass');
+
+			$('#btn1').click(function(){
+				$('p.para2').toggleClass('myClass')
+			})
+
+			$('p.para1').text('Hello World');
+
+			$('p.para1').html('<h1>Hello World</h1>');
+
+			$('ul').append('<li>Append List Item</li>');
+
+			$('ul').prepend('<li>Append List Item</li>');
+
+			$('.para1').appendTo('<li>Append List Item</li>')
+
+			$('ul').before('<h4>yolo</h4>');
+			$('ul').after('<h4>yolo</h4>');
+
+			$('ul').empty();
+			$("ul").detach();
+
+			$('input:submit').attr('value', 'yolooooo');
+			alert($('input:submit').attr('type'));
+			$('input:submit').removeAttr('value');
+
+			$('p').wrap('<h1>');
+			$('p').wrapall('<h1>');
+
+			$('input#newItem').keyup(function(e){
+				var code = e.which;
+				if(code == 13){
+					e.preventDefault();
+					$('ul').append('<li>'+e.target.value+'</li>')
+					$('input#newItem').val('')
+				}
+				
+			})*/
+
+		/*Effects and Animations*/
+
+			$('#btnFadeOut').click(function(){
+				$('#box').fadeOut(1500, function(){
+					$('#btnFadeOut').text('Its Gonee');
+				});
+			});
+			$('#btnFadeIn').click(function(){
+				$('#box').fadeIn(1500);
+			});
+			$('#btnFadeTog').click(function(){
+				$('#box').fadeToggle(1000);
+			});
+
+			$('#btnSlideDown').click(function(){
+				$('#box').slideDown(1000);
+			});
+			$('#btnSlideUp').click(function(){
+				$('#box').slideUp(1000);
+			});
+			$('#btnSlideTog').click(function(){
+				$('#box').slideToggle(1000);
+			});
+			$('#btnStop').click(function(){
+				$('#box').stop();
+			});
+
+			$('#moveRight').click(function(){
+				$('#box2').animate({
+					left: 500,
+					height: 500,
+					width: 500,
+					opacity: 0.5
+				});
+			});
+			$('#moveLeft').click(function(){
+				$('#box2').animate({
+					left: 0,
+					height: 100,
+					width: 100,
+					opacity: 1
+				});
+			});
+			$('#moveAround').click(function(){
+				var box = $('#box2');
+				box.animate({
+					left: 300,
+					height: 75,
+					width: 75
+				});
+				box.animate({
+					left: 300,
+					top: 300,
+					height: 50,
+					width: 50
+				});
+				box.animate({
+					top: 300,
+					left: 0,
+					height: 75,
+					width: 75
+				});
+				box.animate({
+					left: 0,
+					top: 0,
+					height: 100,
+					width: 100
+				});
+			});
+		});
+
+		/*DOM MANIPULATION
+
+		var myArr = ['James', 'Mak', 'Bob', 'Juan'];
+
+		$.each(myArr, function(i, val){
+			$('ul').append('<li>'+val+'</li>')
+		})
+
+		var newArr = $('ul li').toArray();
+		$('form').after(newArr)*/
+	</script>
+</body>
+</html>

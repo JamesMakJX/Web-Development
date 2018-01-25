@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<!-- 
+    This Project teaches:
+1) Facebook SDK
+ -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/slate/bootstrap.min.css">
+    <style>
+        #fb-btn{
+            margin-right: 10px;
+        }
+
+        #profile, #feed{
+            display: none;
+        }
+
+        #logout{
+            display: none;
+            border-width: 1px;
+            text-decoration: none;
+            border-radius: 2px;
+            background: #3b5998;
+            padding: 2px 10px;
+            margin-right: 10px;
+            font-family: arial;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        div.container{
+            /* border-width: 1px;
+            border: solid white; */
+        }
+
+        #heading{
+            /* border-width: 1px;
+            border: solid white; */
+            margin-left: 50%;
+            margin-top: 20%;
+            transform: translate(-30%);
+            padding: 0;
+        }
+
+
+    </style>
+</head>
+<body>
+    
+    <script>
+        window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '556306454719582',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v2.11'
+        });
+            
+        
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });  
+            
+        };
+    
+        (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function statusChangeCallback(response){
+            if(response.status == 'connected'){
+                console.log('Logged in and authenticated');
+                setElements(true);
+                testAPI();
+            } else {
+                console.log('Not Authenticated');
+                setElements(false);
+            }
+        }
+
+        function testAPI(){
+            FB.api('/me?fields=name,email,birthday,location', function(response){
+                if(response && !response.error){
+                    // console.log(response);
+                    buildProfile(response);
+                }
+
+                FB.api('/me/feed', function(response){
+                    if(response && !response.error){
+                        buildFeed(response);
+                    }
+                })
+            })
+        }
+
+        function buildFeed(feed){
+            let output = '<h3>Latest Posts</h3>';
+            for(let i in feed.data){
+                if(feed.data[i].message){
+                    output += `
+                        <div class="well">
+                            ${feed.data[i].message} <br><span>(${feed.data[i].created_time})</span><hr>
+                        </div>
+                    `;
+                }
+            }
+
+            document.getElementById('feed').innerHTML = output;
+        }
+
+        function buildProfile(user){
+            let profile = `
+                <h3>${user.name}</h3>
+                <ul class="list-group">
+                    <li class="list-group-item">User ID: ${user.id}</li>
+                    <li class="list-group-item">User Email: ${user.email}</li>
+                    <li class="list-group-item">User Birthday: ${user.birthday}</li>
+                    <li class="list-group-item">User Location: ${user.location.name}</li>
+                </ul>
+            `;
+
+            document.getElementById('profile').innerHTML = profile
+        }
+
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        function setElements(isLoggedIn){
+            if(isLoggedIn){
+                document.getElementById('profile').style.display = 'block';
+                document.getElementById('fb-btn').style.display = 'none';
+                document.getElementById('logout').style.display = 'block';
+                document.getElementById('heading').style.display = 'none';
+                document.getElementById('feed').style.display = 'block';
+                
+            } else {
+                document.getElementById('profile').style.display = 'none';
+                document.getElementById('fb-btn').style.display = 'block';
+                document.getElementById('logout').style.display = 'none';
+                document.getElementById('heading').style.display = 'block';
+                document.getElementById('feed').style.display = 'none';
+                
+            }
+        }
+
+        function logout(){
+            FB.logout(function(response){
+                setElements(false)
+            })
+        }
+    </script>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav navbar-right">
+        <li><a id="logout" href="#" onclick="logout()">Logout</a></li>
+        <fb:login-button
+        id="fb-btn" 
+        scope="public_profile,email,user_birthday,user_location,user_posts"
+        onlogin="checkLoginState();">
+        </fb:login-button>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+</nav>
+
+    <div class="container">
+        <h3 id="heading">
+            Login in to view your profile!
+        </h3>
+        <br>
+        <div id="profile"></div>
+        <br>
+        <div id="feed"></div>
+    </div>
+    
+    
+</body>
+</html>

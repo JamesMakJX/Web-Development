@@ -1,0 +1,185 @@
+*{
+  margin:0;
+  padding: 0;
+
+}
+
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #12475f;
+  color: white;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.container{
+  max-width: 960px;
+  margin:auto;
+  padding: 0 30px;
+}
+
+#showcase{
+  height: 300px;
+
+}
+
+#showcase h1{
+  font-size: 50px;
+  line-height: 1.3;
+  position:relative;
+  animation-name:heading;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  
+}
+
+@keyframes heading{
+  0% {top: -50px}
+  100% {top: 200px}
+}
+
+#content{
+  position: relative;
+  animation-name: content;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes content{
+  0% {right: 1000px}
+  100% {right: 0}
+}
+
+.btn{
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  padding: 1rem 2rem;
+  border: white 1px solid;
+  margin-top: 40px;
+  opacity: 0;
+  animation-name: btn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-delay: 2s;
+
+  transition-property: transform;
+  transition-duration: 1s;
+}
+
+.btn:hover{
+  transform: rotateX(360deg)
+}
+
+@keyframes btn{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+
+.circle{
+  height: 10px;
+  width: 10px;
+  background: blue;
+  margin:auto;
+  position: relative;
+  top: 10px;
+  border-radius: 50%;
+  animation-name: roundy;
+  animation-duration: 2s;
+  animation-delay: 3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  opacity: 0
+}
+
+@keyframes roundy{
+  0% {top:10px; left: 0; opacity: 0; background:blue}
+  17% {top:10px; left: -6rem; opacity: 0.5;background:red}
+  33% {top:-60px; left: -6rem; opacity: 1;background:green}
+  50% {top:-60px; left: 0; opacity: 1;background:yellow}
+  67% {top:-60px; left: 6rem; opacity: 1;background:blue}
+  83% {top:10px; left: 6rem; opacity: 0.5;background:red}
+  100% {top:10px; left: 0; opacity: 0;background:blue}
+}
+
+.circle2{
+  height: 10px;
+  width: 10px;
+  background: red;
+  margin:auto;
+  position: relative;
+  top: 0px;
+  border-radius: 50%;
+  animation-name: roundy2;
+  animation-duration: 2s;
+  animation-delay: 3.1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes roundy2{
+  0% {top:0px; left: 0; opacity: 0;background:red}
+  17% {top:0px; left: -6rem; opacity: 0.5;background:green}
+  33% {top:-70px; left: -6rem; opacity: 1;background:yellow}
+  50% {top:-70px; left: 0; opacity: 1;background:blue}
+  67% {top:-70px; left: 6rem; opacity: 1;background:red}
+  83% {top:0px; left: 6rem; opacity: 0.5;background:green}
+  100% {top:0px; left: 0; opacity: 0;background:red}
+}
+
+.circle3{
+  height: 10px;
+  width: 10px;
+  background: green;
+  margin:auto;
+  position: relative;
+  top: -10px;
+  border-radius: 50%;
+  animation-name: roundy3;
+  animation-duration: 2s;
+  animation-delay: 3.2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes roundy3{
+  0% {top:-10px; left: 0; opacity: 0;background:green}
+  17% {top:-10px; left: -6rem; opacity: 0.5;background:yellow}
+  33% {top:-80px; left: -6rem; opacity: 1;background:blue}
+  50% {top:-80px; left: 0; opacity: 1;background:red}
+  67% {top:-80px; left: 6rem; opacity: 1;background:green}
+  83% {top:-10px; left: 6rem; opacity: 0.5;background:yellow}
+  100% {top:-10px; left: 0; opacity: 0;background:green}
+}
+
+.circle4{
+  height: 10px;
+  width: 10px;
+  background: yellow;
+  margin:auto;
+  position: relative;
+  top: -20px;
+  border-radius: 50%;
+  animation-name: roundy4;
+  animation-duration: 2s;
+  animation-delay: 3.3s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  opacity: 0;
+}
+
+@keyframes roundy4{
+  0% {top:-20px; left: 0; opacity: 0;background:yellow}
+  17% {top:-20px; left: -6rem; opacity: 0.5;background:blue}
+  33% {top:-90px; left: -6rem; opacity: 1;background:red}
+  50% {top:-90px; left: 0; opacity: 1;background:green}
+  67% {top:-90px; left: 6rem; opacity: 1;background:yellow}
+  83% {top:-20px; left: 6rem; opacity: 0.5;background:blue}
+  100% {top:-20px; left: 0; opacity: 0;background:yellow}
+}
